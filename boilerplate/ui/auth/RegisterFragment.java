@@ -18,7 +18,7 @@ import com.ciberciti.subscraze.databinding.FragmentRegisterBinding;
  * Use the {@link RegisterFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RegisterFragment extends Fragment {
+public class RegisterFragment extends BaseFragment {
 
     FragmentRegisterBinding binding;
     RegisterFragmentClickHandlers registerFragmentClickHandlers;
