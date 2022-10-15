@@ -1,0 +1,96 @@
+
+// --- java ---
+
+
+LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            final Dialog dialogAddProject = new AlertDialog.Builder(getActivity())
+                    .setView(inflater.inflate(R.layout.dialog_reset_password, null)).show();
+
+            EditText edtAddProjectName = dialogAddProject.findViewById(R.id.edt_add_project_name);
+            dialogAddProject.findViewById(R.id.btnCancel).setOnClickListener(v1 -> dialogAddProject.dismiss());
+            dialogAddProject.findViewById(R.id.btnCreate).setOnClickListener(view2 -> {
+                if (!edtAddProjectName.getText().toString().isEmpty()) {
+                    authViewModel.resetPassword(edtAddProjectName.getText().toString().trim()).observe(getViewLifecycleOwner(), isSuccessful -> {
+                        if (isSuccessful) {
+                            dialogAddProject.dismiss();
+                            showToast(getString(R.string.reset_email_send_successful));
+                        }
+                    });
+
+                } else {
+                    showToast(getString(R.string.empty_email_msg));
+                }
+
+            });
+			
+			
+// --- xml --- dialog_reset_password.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="4dp"
+        android:text="@string/reset_password"
+        android:textAlignment="center"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:text="@string/enter_your_registerd_email_id"
+        android:textAlignment="center"
+        />
+
+    <EditText
+        android:id="@+id/edt_add_project_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:hint="@string/email_here"
+        android:padding="8dp"
+       />
+
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
+            android:text="@string/cancel"
+            android:textColor="@color/black"
+            android:textAllCaps="false"
+
+            />
+
+        <Button
+
+            android:id="@+id/btnCreate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+
+
+            android:text="@string/send"
+            android:textAllCaps="false" />
+    </LinearLayout>
+
+</LinearLayout> 
