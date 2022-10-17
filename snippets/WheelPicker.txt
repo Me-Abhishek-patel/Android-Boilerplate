@@ -1,0 +1,90 @@
+// ----- JAVA----
+
+        private void showPaymentMethodDialog() {
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            final Dialog dialog = new AlertDialog.Builder(context)
+                    .setView(inflater.inflate(R.layout.dialog_notification_reminder, null)).show();
+            String[] picker1Vals = {"Apple Pay", "Google Pay", "Credit Card", "None Selected"};
+
+            NumberPicker picker1 = dialog.findViewById(R.id.time_picker);
+            TextView tvTitle = dialog.findViewById(R.id.dialog_title);
+            tvTitle.setText(R.string.choose_payment_method);
+            picker1.setMinValue(0);
+            picker1.setMaxValue(picker1Vals.length - 1);
+
+            picker1.setDisplayedValues(picker1Vals);
+
+            picker1.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+                @Override
+                public void onValueChange(NumberPicker numberPicker, int i, int i1) {
+                    Log.d("TAG", "onValueChange: " + numberPicker + "  " + i + "  " + i1);
+                }
+            });
+
+            dialog.findViewById(R.id.btnCancel).setOnClickListener(v1 -> dialog.dismiss());
+            dialog.findViewById(R.id.btnCreate).setOnClickListener(view2 -> {
+                mViewModel.setPaymentMethod(picker1Vals[picker1.getValue()]);
+				dialog.dismiss();
+            });
+        }
+
+
+// ---- R.layout.dialog_notification_reminder ----
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/dialog_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="4dp"
+        android:text="Select Reminder Time"
+        android:textAlignment="center"
+        android:textStyle="bold" />
+
+
+    <NumberPicker
+        android:id="@+id/time_picker"
+        android:layout_width="match_parent"
+        android:layout_margin="10dp"
+        android:layout_weight="1"
+        android:layout_height="180dp" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
+            android:text="@string/cancel"
+            android:textColor="@color/black"
+            android:textAllCaps="false"
+
+            />
+
+        <Button
+
+            android:id="@+id/btnCreate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+
+
+            android:text="OK"
+            android:textAllCaps="false" />
+    </LinearLayout>
+
+
+</LinearLayout>
